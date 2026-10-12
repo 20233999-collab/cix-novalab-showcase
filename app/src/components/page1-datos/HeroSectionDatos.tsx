@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronDown, TrendingDown, Clock, ShieldAlert, Layers } from "lucide-react";
+import { ChevronDown, TrendingDown, Clock, Layers } from "lucide-react";
 import GlowHorizonFM from "@/components/ui/glow-horizon";
 import { AnimatedTitleFM } from "@/components/ui/glow-horizon-utils/animated-title-fm";
-import { MACRO_METRICS } from "@/data/novalabData";
 
 export const HeroSectionDatos: React.FC = () => {
   return (
@@ -82,7 +81,7 @@ export const HeroSectionDatos: React.FC = () => {
           }}
           className="w-full max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
         >
-          {/* Métrica 1: Brecha Output - Loop: Aura viajera horizontal + resplandor suave */}
+          {/* Métrica 1: Déficit de Entregables (Output) */}
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.94 },
@@ -94,7 +93,7 @@ export const HeroSectionDatos: React.FC = () => {
               },
             }}
             whileHover={{ y: -5, transition: { duration: 0.25 } }}
-            className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-white/15 backdrop-blur-xl relative overflow-hidden group hover:border-[#3B49DF]/80 transition-all shadow-lg hover:shadow-[#3B49DF]/25 cursor-default"
+            className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-white/15 backdrop-blur-xl relative overflow-hidden group hover:border-[#3B49DF]/80 transition-all shadow-lg hover:shadow-[#3B49DF]/25 cursor-default flex flex-col justify-between"
           >
             {/* Animación en Loop 1: Haz de luz viajero continuo (beam gradient sweep) */}
             <motion.div
@@ -110,28 +109,33 @@ export const HeroSectionDatos: React.FC = () => {
               className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent pointer-events-none -skew-x-12"
             />
 
-            <div className="flex items-center justify-between mb-2 relative z-10">
-              <span className="text-[10px] font-mono tracking-wider text-white/90 uppercase font-bold">
-                EXPERIMENTOS
+            <div>
+              <div className="flex items-center justify-between mb-2 relative z-10">
+                <span className="text-[10px] font-mono tracking-wider text-white/90 uppercase font-bold">
+                  DÉFICIT DE ENTREGABLES (OUTPUT)
+                </span>
+                <motion.span 
+                  animate={{ opacity: [0.75, 1, 0.75] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-rose-400 font-mono text-[11px] font-bold flex items-center gap-0.5"
+                >
+                  <TrendingDown className="w-3 h-3" />
+                  -26.7%
+                </motion.span>
+              </div>
+              <div className="flex items-baseline gap-1.5 relative z-10">
+                <span className="text-2xl sm:text-3xl font-extrabold font-mono text-white">
+                  44
+                </span>
+                <span className="text-xs font-mono text-white/80 font-medium">/ 60 Meta Anual</span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 mt-1 block relative z-10">
+                Déficit del 26.7% vs. meta de 60 exp.
               </span>
-              <motion.span 
-                animate={{ opacity: [0.75, 1, 0.75] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="text-rose-400 font-mono text-[11px] font-bold flex items-center gap-0.5"
-              >
-                <TrendingDown className="w-3 h-3" />
-                -26.7%
-              </motion.span>
-            </div>
-            <div className="flex items-baseline gap-1.5 relative z-10">
-              <span className="text-2xl sm:text-3xl font-extrabold font-mono text-white">
-                44
-              </span>
-              <span className="text-xs font-mono text-white/80 font-medium">/ 60 Meta</span>
             </div>
             
             {/* Barra de progreso con respiración de pulso */}
-            <div className="mt-2.5 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden relative z-10">
+            <div className="mt-3 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden relative z-10">
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: "73.3%" }}
@@ -149,7 +153,7 @@ export const HeroSectionDatos: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Métrica 2: Cycle Time Explosion - Loop: Tic-tac sutil de reloj y pulso ámbar */}
+          {/* Métrica 2: Ralentización Sistémica (Cycle Time) */}
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.94 },
@@ -161,7 +165,7 @@ export const HeroSectionDatos: React.FC = () => {
               },
             }}
             whileHover={{ y: -5, transition: { duration: 0.25 } }}
-            className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-white/15 backdrop-blur-xl relative overflow-hidden group hover:border-amber-500/80 transition-all shadow-lg hover:shadow-amber-500/25 cursor-default"
+            className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-white/15 backdrop-blur-xl relative overflow-hidden group hover:border-amber-500/80 transition-all shadow-lg hover:shadow-amber-500/25 cursor-default flex flex-col justify-between"
           >
             {/* Animación en Loop 2: Respiración de halo ámbar de advertencia */}
             <motion.div
@@ -176,43 +180,49 @@ export const HeroSectionDatos: React.FC = () => {
               className="absolute -top-10 -right-10 w-28 h-28 bg-[#FEA900]/15 rounded-full blur-2xl pointer-events-none"
             />
 
-            <div className="flex items-center justify-between mb-2 relative z-10">
-              <span className="text-[10px] font-mono tracking-wider text-white/90 uppercase font-bold">
-                CYCLE TIME T1→T4
-              </span>
-              <span className="text-amber-400 font-mono text-[11px] font-bold flex items-center gap-0.5">
-                {/* Icono con sutil rotación en loop tipo segundero */}
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+            <div>
+              <div className="flex items-center justify-between mb-2 relative z-10">
+                <span className="text-[10px] font-mono tracking-wider text-white/90 uppercase font-bold">
+                  RALENTIZACIÓN SISTÉMICA (CYCLE TIME)
+                </span>
+                <span className="text-amber-400 font-mono text-[11px] font-bold flex items-center gap-0.5">
+                  {/* Icono con sutil rotación en loop tipo segundero */}
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Clock className="w-3 h-3" />
+                  </motion.div>
+                  +50%
+                </span>
+              </div>
+              <div className="flex items-baseline gap-1.5 relative z-10">
+                <motion.span 
+                  animate={{
+                    textShadow: [
+                      "0 0 0px rgba(254,169,0,0)",
+                      "0 0 16px rgba(254,169,0,0.5)",
+                      "0 0 0px rgba(254,169,0,0)",
+                    ],
+                  }}
+                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-2xl sm:text-3xl font-extrabold font-mono text-amber-400"
                 >
-                  <Clock className="w-3 h-3" />
-                </motion.div>
-                +50%
+                  57
+                </motion.span>
+                <span className="text-xs font-mono text-white/80 font-medium">días hábiles en T4</span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 mt-1 block relative z-10">
+                Pasó de 38 días en T1 a 57 días en T4
               </span>
             </div>
-            <div className="flex items-baseline gap-1.5 relative z-10">
-              <motion.span 
-                animate={{
-                  textShadow: [
-                    "0 0 0px rgba(254,169,0,0)",
-                    "0 0 16px rgba(254,169,0,0.5)",
-                    "0 0 0px rgba(254,169,0,0)",
-                  ],
-                }}
-                transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-                className="text-2xl sm:text-3xl font-extrabold font-mono text-amber-400"
-              >
-                57
-              </motion.span>
-              <span className="text-xs font-mono text-white/80 font-medium">días hábiles</span>
+
+            <div className="mt-3 pt-2 border-t border-white/5 text-[10px] font-mono text-amber-300/90 relative z-10">
+              Deterioro del 50% en el año
             </div>
-            <span className="text-[10px] font-mono text-white/70 mt-1 block relative z-10">
-              Promedio anual: 46 días
-            </span>
           </motion.div>
 
-          {/* Métrica 3: Cuello de Botella Aprobaciones - Loop: Pulso de alarma crítico en rojo */}
+          {/* Métrica 3: Caída de Eficiencia (Throughput) */}
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.94 },
@@ -224,9 +234,9 @@ export const HeroSectionDatos: React.FC = () => {
               },
             }}
             whileHover={{ y: -5, transition: { duration: 0.25 } }}
-            className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-white/15 backdrop-blur-xl relative overflow-hidden group hover:border-rose-500/80 transition-all shadow-lg hover:shadow-rose-500/30 cursor-default"
+            className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-white/15 backdrop-blur-xl relative overflow-hidden group hover:border-rose-500/80 transition-all shadow-lg hover:shadow-rose-500/30 cursor-default flex flex-col justify-between"
           >
-            {/* Animación en Loop 3: Resplandor intermitente suave de estado crítico */}
+            {/* Animación en Loop 3: Resplandor intermitente suave */}
             <motion.div
               animate={{
                 opacity: [0.1, 0.35, 0.1],
@@ -240,38 +250,39 @@ export const HeroSectionDatos: React.FC = () => {
               className="absolute -bottom-8 -left-8 w-28 h-28 bg-rose-500/20 rounded-full blur-2xl pointer-events-none"
             />
 
-            <div className="flex items-center justify-between mb-2 relative z-10">
-              <span className="text-[10px] font-mono tracking-wider text-white/90 uppercase font-bold">
-                RETRABAJOS
-              </span>
-              <span className="text-rose-400 font-mono text-[11px] font-bold flex items-center gap-1.5">
-                {/* Pulso de radar rojo + icono ShieldAlert */}
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+            <div>
+              <div className="flex items-center justify-between mb-2 relative z-10">
+                <span className="text-[10px] font-mono tracking-wider text-white/90 uppercase font-bold">
+                  CAÍDA DE EFICIENCIA (THROUGHPUT)
                 </span>
-                <ShieldAlert className="w-3 h-3 text-rose-400" />
-                CRÍTICO
+                <span className="text-rose-400 font-mono text-[11px] font-bold flex items-center gap-0.5">
+                  <TrendingDown className="w-3 h-3" />
+                  -42.8%
+                </span>
+              </div>
+              <div className="flex items-baseline gap-1.5 relative z-10">
+                <motion.span 
+                  animate={{
+                    scale: [1, 1.025, 1],
+                  }}
+                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-2xl sm:text-3xl font-extrabold font-mono text-rose-500"
+                >
+                  8
+                </motion.span>
+                <span className="text-xs font-mono text-white/80 font-medium">exp. en T4 (vs 14 en T1)</span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 mt-1 block relative z-10">
+                Productividad trimestral: 14 (T1) vs. 8 (T4)
               </span>
             </div>
-            <div className="flex items-baseline gap-1.5 relative z-10">
-              <motion.span 
-                animate={{
-                  scale: [1, 1.025, 1],
-                }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                className="text-2xl sm:text-3xl font-extrabold font-mono text-rose-500"
-              >
-                61%
-              </motion.span>
-              <span className="text-xs font-mono text-white/80 font-medium">27 de 44</span>
+
+            <div className="mt-3 pt-2 border-t border-white/5 text-[10px] font-mono text-rose-300/90 relative z-10">
+              Desplome del 42.8% en el año
             </div>
-            <span className="text-[10px] font-mono text-white/70 mt-1 block relative z-10">
-              +150% de demora (+12 días)
-            </span>
           </motion.div>
 
-          {/* Métrica 4: Backlog Choke - Loop: Capas flotando suavemente (floating layers) */}
+          {/* Métrica 4: Inventario Bloqueado (Backlog) */}
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 40, scale: 0.94 },
@@ -283,7 +294,7 @@ export const HeroSectionDatos: React.FC = () => {
               },
             }}
             whileHover={{ y: -5, transition: { duration: 0.25 } }}
-            className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-white/15 backdrop-blur-xl relative overflow-hidden group hover:border-indigo-400/80 transition-all shadow-lg hover:shadow-indigo-500/25 cursor-default"
+            className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-white/15 backdrop-blur-xl relative overflow-hidden group hover:border-indigo-400/80 transition-all shadow-lg hover:shadow-indigo-500/25 cursor-default flex flex-col justify-between"
           >
             {/* Animación en Loop 4: Resplandor azul tenue */}
             <motion.div
@@ -298,30 +309,35 @@ export const HeroSectionDatos: React.FC = () => {
               className="absolute inset-0 bg-gradient-to-t from-[#3B49DF]/10 to-transparent pointer-events-none"
             />
 
-            <div className="flex items-center justify-between mb-2 relative z-10">
-              <span className="text-[10px] font-mono tracking-wider text-white/90 uppercase font-bold">
-                IDEAS ESTANCADAS
-              </span>
-              <span className="text-slate-200 font-mono text-[11px] font-bold flex items-center gap-1">
-                {/* Capas flotando suavemente */}
-                <motion.div
-                  animate={{ y: [-1, 1, -1] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <Layers className="w-3 h-3 text-[#3B49DF]" />
-                </motion.div>
-                EN COLA
+            <div>
+              <div className="flex items-center justify-between mb-2 relative z-10">
+                <span className="text-[10px] font-mono tracking-wider text-white/90 uppercase font-bold">
+                  INVENTARIO BLOQUEADO (BACKLOG)
+                </span>
+                <span className="text-slate-200 font-mono text-[11px] font-bold flex items-center gap-1">
+                  <motion.div
+                    animate={{ y: [-1, 1, -1] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Layers className="w-3 h-3 text-[#3B49DF]" />
+                  </motion.div>
+                  EN COLA
+                </span>
+              </div>
+              <div className="flex items-baseline gap-1.5 relative z-10">
+                <span className="text-2xl sm:text-3xl font-extrabold font-mono text-white">
+                  23
+                </span>
+                <span className="text-xs font-mono text-white/80 font-medium">ideas de negocio</span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 mt-1 block relative z-10">
+                Acumuladas en cola esperando entrar al flujo
               </span>
             </div>
-            <div className="flex items-baseline gap-1.5 relative z-10">
-              <span className="text-2xl sm:text-3xl font-extrabold font-mono text-white">
-                {MACRO_METRICS.backlogChokeIdeas}
-              </span>
-              <span className="text-xs font-mono text-white/80 font-medium">bloqueadas</span>
+
+            <div className="mt-3 pt-2 border-t border-white/5 text-[10px] font-mono text-indigo-300/90 relative z-10">
+              Equivale a ~2.9 trimestres de retraso
             </div>
-            <span className="text-[10px] font-mono text-white/70 mt-1 block relative z-10">
-              2.9 trimestres de retraso
-            </span>
           </motion.div>
         </motion.div>
       </div>
