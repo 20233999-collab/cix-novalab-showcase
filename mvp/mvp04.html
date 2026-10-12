@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-[#050711] text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CIX NovaLab // Knowledge Repo & RAG MVP 04</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cix: {
+              navy: '#060919',
+              card: '#0C122C',
+              border: 'rgba(255, 255, 255, 0.08)',
+              indigo: '#3B49DF',
+              gold: '#FEA900',
+              scarlet: '#E11D48',
+              emerald: '#10B981',
+            }
+          },
+          fontFamily: {
+            mono: ['"JetBrains Mono"', 'monospace', 'ui-monospace'],
+            sans: ['"Outfit"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Cero barra de desplazamiento */
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      /* Gradiente corporativo idéntico: Naranja CIX a Azul Oscuro */
+      background: linear-gradient(105deg, #A84900 0%, #3D1C02 18%, #151838 45%, #080C1F 75%, #040612 100%);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Marco de Celular iPhone Realista (350x700px exacto) */
+    .phone-container {
+      position: relative;
+      padding: 3px;
+    }
+
+    .phone-mockup {
+      width: 350px;
+      height: 700px;
+      background: #080C1F;
+      border-radius: 52px;
+      box-shadow: 
+        0 0 0 4px #2D3748,
+        0 0 0 7px #1A202C,
+        0 0 0 9px #0F172A,
+        0 25px 50px -12px rgba(0, 0, 0, 0.9),
+        0 0 40px rgba(59, 73, 223, 0.15);
+      position: relative;
+      overflow: hidden;
+      border: 3.5px solid #000;
+    }
+
+    /* Botones físicos laterales del iPhone */
+    .iphone-button-silent {
+      position: absolute;
+      left: -12px;
+      top: 105px;
+      width: 4px;
+      height: 26px;
+      background: #2D3748;
+      border-radius: 3px 0 0 3px;
+    }
+    .iphone-button-vol-up {
+      position: absolute;
+      left: -12px;
+      top: 145px;
+      width: 4px;
+      height: 48px;
+      background: #2D3748;
+      border-radius: 3px 0 0 3px;
+    }
+    .iphone-button-vol-down {
+      position: absolute;
+      left: -12px;
+      top: 205px;
+      width: 4px;
+      height: 48px;
+      background: #2D3748;
+      border-radius: 3px 0 0 3px;
+    }
+    .iphone-button-power {
+      position: absolute;
+      right: -12px;
+      top: 165px;
+      width: 4px;
+      height: 68px;
+      background: #2D3748;
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* Isla Dinámica */
+    .dynamic-island {
+      width: 110px;
+      height: 28px;
+      background: #000;
+      border-radius: 20px;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen py-8 px-6 overflow-hidden flex items-center justify-center">
+
+  <!-- ================= LAYOUT CONTAINER (MISMAS MEDIDAS EXACTAS) ================= -->
+  <div class="w-full max-w-7xl mx-auto h-full flex flex-col lg:flex-row items-center justify-start gap-12 lg:pl-28">
+
+    <!-- COLUMNA: CELULAR MOCKUP IPHONE -->
+    <div class="shrink-0 phone-container">
+      <!-- Botones físicos de titanio del iPhone -->
+      <div class="iphone-button-silent"></div>
+      <div class="iphone-button-vol-up"></div>
+      <div class="iphone-button-vol-down"></div>
+      <div class="iphone-button-power"></div>
+
+      <!-- ================= MARCO DE TELÉFONO IPHONE ================= -->
+      <div class="phone-mockup flex flex-col">
+    
+        <!-- Dynamic Island & Status Bar -->
+        <div class="dynamic-island">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#111]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#080808] border border-white/10 flex items-center justify-center">
+            <span class="w-1 h-1 rounded-full bg-blue-500/60"></span>
+          </span>
+        </div>
+
+        <!-- Phone Top Status Bar (9:41, WiFi, Batería) -->
+        <div class="pt-3 px-7 pb-2 flex justify-between items-center text-[12px] font-mono font-bold text-slate-300 z-40">
+          <span>9:41</span>
+          <div class="flex items-center gap-1.5 opacity-80">
+            <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+            <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+            <i data-lucide="battery" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- App Header Minimal -->
+        <header id="app-header" class="px-5 py-2 flex items-center justify-between border-b border-white/5 z-30">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-md bg-gradient-to-tr from-cix-indigo to-cix-gold flex items-center justify-center text-[10px] font-black text-white">
+              C
+            </div>
+            <span class="font-bold text-xs tracking-wide text-white">BCP BRAIN</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cix-gold/15 text-cix-gold border border-cix-gold/30">RAG AI</span>
+            <button onclick="resetMVP04()" title="Reiniciar Pantalla" class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white active:scale-95 transition-transform">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="logoutMVP04()" title="Cerrar Sesión" class="w-7 h-7 rounded-full bg-cix-scarlet/15 border border-cix-scarlet/30 flex items-center justify-center text-rose-400 hover:text-rose-300 active:scale-95 transition-transform">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </header>
+
+        <!-- ================= CONTENEDOR DE PANTALLAS MÓVILES ================= -->
+        <div class="flex-1 overflow-y-auto no-scrollbar relative flex flex-col justify-between p-5">
+
+          <!-- ================= SCREEN 1: EL MURO DE GATING (BLOQUEO POR FICHA) ================= -->
+          <div id="screen-1" class="flex-1 flex flex-col justify-between py-1 transition-all duration-300">
+            
+            <div>
+              <div class="flex justify-between items-center mb-2 text-[11px] font-mono">
+                <span class="text-slate-400">PORTAFOLIO CIX</span>
+                <span class="text-rose-400 font-bold">1 PENDIENTE</span>
+              </div>
+
+              <!-- Banner de Alerta de Gating -->
+              <div class="bg-cix-scarlet/15 border border-cix-scarlet/40 rounded-2xl p-4 mb-4">
+                <div class="flex items-center gap-2 text-rose-300 font-mono text-[10px] font-bold mb-1">
+                  <i data-lucide="lock" class="w-4 h-4 text-cix-scarlet"></i>
+                  <span>GATING ACTIVO // MEMORIA OBLIGATORIA</span>
+                </div>
+                <div class="text-xs font-bold text-white mb-1">Presupuesto Bloqueado</div>
+                <p class="text-[11px] text-slate-300 leading-snug">
+                  Debes documentar los aprendizajes de tu prueba anterior para habilitar nuevos experimentos.
+                </p>
+              </div>
+
+              <!-- Tarjeta de Experimento Pendiente de Ficha -->
+              <div class="bg-cix-card/80 border border-white/10 rounded-2xl p-4 mb-3">
+                <div class="flex justify-between items-center text-[10px] font-mono mb-1 text-slate-400">
+                  <span>EXP-094 · CONCLUIDO</span>
+                  <span class="text-amber-400 font-bold">FALTA FICHA</span>
+                </div>
+                <div class="text-xs font-bold text-white mb-2">Onboarding Fondos Mutuos</div>
+                <button onclick="solveGatingAndSearch()" class="w-full py-2.5 rounded-xl bg-cix-gold/20 hover:bg-cix-gold/30 border border-cix-gold/40 text-cix-gold font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                  <span>DOCUMENTAR FICHA (DESBLOQUEAR)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Botón Nuevo Experimento Bloqueado -->
+            <div class="pt-2">
+              <button disabled class="w-full py-4 rounded-2xl bg-white/5 border border-white/5 text-slate-500 font-mono text-xs font-bold flex items-center justify-center gap-2 cursor-not-allowed">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+                <span>NUEVO EXPERIMENTO (BLOQUEADO)</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- ================= SCREEN 2: NOVA SEARCH (EL BUSCADOR RAG) ================= -->
+          <div id="screen-2" class="flex-1 flex flex-col justify-between py-1 hidden transition-all duration-300">
+            
+            <div>
+              <div class="text-center my-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cix-indigo to-cix-gold flex items-center justify-center text-white mx-auto mb-2 shadow-lg shadow-cix-indigo/25">
+                  <i data-lucide="sparkles" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-sm font-bold text-white">Nova Search</h3>
+                <span class="text-[10px] font-mono text-slate-400">MEMORIA COLECTIVA DEL BANCO</span>
+              </div>
+
+              <!-- Input de Búsqueda RAG -->
+              <div class="bg-cix-card/90 border border-cix-indigo/50 rounded-2xl p-3 flex items-center gap-2.5 mb-4 shadow-lg shadow-cix-indigo/15">
+                <i data-lucide="search" class="w-4 h-4 text-cix-gold"></i>
+                <input id="rag-input" type="text" readonly value="Notificaciones de pago en Pymes" class="bg-transparent text-xs text-white font-mono w-full focus:outline-none">
+              </div>
+
+              <!-- Chips de Búsqueda Rápida (1 Tap) -->
+              <div class="space-y-2">
+                <span class="text-[10px] font-mono text-slate-400 block">CONSULTAS POPULARES:</span>
+                
+                <button onclick="runRAGSearch()" class="w-full text-left bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-3 active:scale-[0.98] transition-all flex items-center justify-between">
+                  <div>
+                    <div class="text-xs text-white font-medium">Notificaciones Push en Pymes</div>
+                    <div class="text-[10px] font-mono text-slate-400">Buscar si ya se probó</div>
+                  </div>
+                  <i data-lucide="arrow-right" class="w-4 h-4 text-cix-gold"></i>
+                </button>
+
+                <div class="bg-white/5 border border-white/5 rounded-xl p-3 opacity-50">
+                  <div class="text-xs text-slate-400 font-medium">Descuentos en Fondos Mutuos</div>
+                  <div class="text-[10px] font-mono text-slate-500">Historial de Seguros</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón Buscar con IA -->
+            <div class="pt-2">
+              <button id="btn-run-rag" onclick="runRAGSearch()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cix-indigo to-[#4A5AFF] hover:opacity-95 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-cix-indigo/30 active:scale-[0.98] transition-all">
+                <i data-lucide="cpu" class="w-4 h-4 text-cix-gold"></i>
+                <span>CONSULTAR AL BCP BRAIN</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- ================= SCREEN 3: SÍNTESIS INTELIGENTE & DUPLICIDAD EVITADA ================= -->
+          <div id="screen-3" class="flex-1 flex flex-col justify-between py-1 hidden transition-all duration-300">
+            
+            <div>
+              <div class="flex justify-between items-center mb-2 pb-1 border-b border-white/5 text-[11px] font-mono">
+                <span class="text-slate-400">SÍNTESIS RAG</span>
+                <span class="text-rose-400 font-bold">DUPLICIDAD DETECTADA</span>
+              </div>
+
+              <!-- Alerta Escarlata de Ahorro de Días -->
+              <div class="bg-rose-500/15 border border-cix-scarlet/50 rounded-2xl p-3 mb-3">
+                <div class="flex items-center gap-1.5 text-rose-300 font-mono text-[10px] font-bold mb-0.5">
+                  <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-cix-scarlet"></i>
+                  <span>46 DÍAS DE TRABAJO AHORRADOS</span>
+                </div>
+                <p class="text-xs text-white font-medium">Este experimento ya fue ejecutado por otro equipo.</p>
+              </div>
+
+              <!-- Síntesis RAG del Pasado -->
+              <div class="bg-cix-card/90 border border-white/10 rounded-2xl p-3.5 text-xs font-mono space-y-2 mb-3">
+                <div class="flex justify-between text-slate-400 text-[10px] border-b border-white/5 pb-1">
+                  <span>EXP-064 · LAB PYMES (Q2)</span>
+                  <span class="text-rose-400 font-bold">FALLIDO / CONCLUYENTE</span>
+                </div>
+                <p class="text-slate-300 text-[11px] leading-relaxed font-sans">
+                  "El envío masivo de SMS aumentó la conversión en <span class="text-emerald-400 font-bold">+4%</span>, pero saturó el Call Center elevando los reclamos en <span class="text-rose-400 font-bold">+12%</span>."
+                </p>
+                <div class="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px]">
+                  ✓ Descargo Legal Preaprobado #08 disponible para reusar
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón Clonar Aprendizaje -->
+            <div class="pt-2">
+              <button onclick="goToScreen(4)" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+                <span>CLONAR & EVITAR ERROR HISTÓRICO</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- ================= SCREEN 4: ÉXITO & MÉTRICAS NORTH STAR ================= -->
+          <div id="screen-4" class="flex-1 flex flex-col items-center justify-between py-6 text-center hidden transition-all duration-300">
+            
+            <div class="my-auto flex flex-col items-center w-full">
+              <div class="w-20 h-20 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mb-3 shadow-xl shadow-emerald-500/20">
+                <i data-lucide="brain" class="w-10 h-10 stroke-[2.5]"></i>
+              </div>
+
+              <span class="text-[10px] font-mono px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30 mb-2">
+                MEMORIA INSTITUCIONAL VIVA
+              </span>
+
+              <h3 class="text-xl font-extrabold text-white mb-1">Cero Trabajo Duplicado</h3>
+              <p class="text-xs font-mono text-slate-400 mb-5">NUEVO EXPEDIENTE NACE BLINDADO</p>
+
+              <!-- Tarjetas de Impacto North Star -->
+              <div class="w-full grid grid-cols-2 gap-2.5 text-left font-mono text-xs mb-3">
+                <div class="bg-cix-card/90 border border-white/10 rounded-xl p-3">
+                  <span class="text-[10px] text-slate-400 block">DUPLICIDAD</span>
+                  <span class="text-emerald-400 font-bold text-base">0%</span>
+                  <span class="text-[9px] text-slate-500 block">Erradicada</span>
+                </div>
+                <div class="bg-cix-card/90 border border-white/10 rounded-xl p-3">
+                  <span class="text-[10px] text-slate-400 block">LEAD TIME AHORRADO</span>
+                  <span class="text-cix-gold font-bold text-base">46 DÍAS</span>
+                  <span class="text-[9px] text-slate-500 block">Por idea evitada</span>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="resetMVP04()" class="w-full py-4 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-mono text-xs font-semibold flex items-center justify-center gap-2 active:scale-95 transition-all">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              <span>REINICIAR SIMULACIÓN</span>
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- Phone Bottom Home Bar -->
+        <div class="pb-2 pt-1 flex justify-center z-40">
+          <div class="w-32 h-1 bg-white/20 rounded-full"></div>
+        </div>
+
+      </div> <!-- Cierre del phone-mockup -->
+    </div> <!-- Cierre de la columna izquierda -->
+
+    <!-- COLUMNA CENTRAL Y DERECHA (VACÍAS) -->
+    <div class="flex-1 w-full min-h-[750px] flex items-center justify-center">
+      <!-- Espacio libre reservado -->
+    </div>
+
+  </div> <!-- Cierre del layout container -->
+
+  <!-- ================= LÓGICA INTERACTIVA DEL MVP 04 ================= -->
+  <script>
+    lucide.createIcons();
+
+    function goToScreen(num) {
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById(`screen-${i}`);
+        if (el) el.classList.add('hidden');
+      }
+      const target = document.getElementById(`screen-${num}`);
+      if (target) target.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    // Resolver el Gating y pasar al buscador RAG
+    function solveGatingAndSearch() {
+      goToScreen(2);
+    }
+
+    // Ejecutar búsqueda en BCP Brain
+    function runRAGSearch() {
+      const btn = document.getElementById('btn-run-rag');
+      btn.innerHTML = '<i data-lucide="loader" class="w-4 h-4 animate-spin"></i><span>CONSULTANDO BCP BRAIN...</span>';
+      lucide.createIcons();
+
+      setTimeout(() => {
+        btn.innerHTML = '<i data-lucide="cpu" class="w-4 h-4 text-cix-gold"></i><span>CONSULTAR AL BCP BRAIN</span>';
+        goToScreen(3);
+      }, 1100);
+    }
+
+    function resetMVP04() {
+      goToScreen(1);
+    }
+
+    function logoutMVP04() {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

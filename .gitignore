@@ -1,0 +1,29 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Runtime / Dependencies
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Playwright artifacts and screenshots
+.playwright-mcp/
+*.png
+!app/public/assets/*.png
+!assets/*.png
+!inspo/*.png
+
+# Editor / System
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

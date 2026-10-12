@@ -1,0 +1,69 @@
+# PROPUESTA DE MVP: SMART CANVAS CIX (AI-Powered Intake)
+**Documento de Definición de Producto y Flujo de Usuario**
+
+## 1. CONCEPTO DEL MVP
+Una plataforma web centralizada para el diseño de experimentos (reemplazando a los PPTs y Excels sueltos). Actúa como un embudo inteligente y condicional impulsado por un Agente de Inteligencia Artificial (entrenado con normativas de Riesgos y Legal del BCP). Su función es "traducir" las ideas del Product Manager (PM) en un expediente técnico estandarizado, libre de errores y listo para aprobación rápida.
+
+## 2. DINÁMICA DE FUNCIONAMIENTO (Cómo funciona)
+
+1. **Ingreso y Dictado (Fricción Cero):** El PM inicia sesión y selecciona su laboratorio. En lugar de enfrentarse a un lienzo en blanco, presiona un botón de micrófono. El PM simplemente "cuenta" su experimento: *"Queremos probar un nuevo botón de inversión en la app para jóvenes de 18 a 25 años. Vamos a mandar un push notification la próxima semana..."*
+2. **Procesamiento de IA (Contexto y Extracción):** El audio se transcribe a texto. El Agente de IA analiza el lenguaje natural y mapea automáticamente la información hacia los campos obligatorios del *Experiment Canvas*.
+3. **Diagnóstico y Alertas en Tiempo Real:** La IA audita la información contra las reglas de Legal y Riesgos. Si detecta vacíos, despliega alertas interactivas. Ejemplo: *"Identifiqué tu segmento objetivo, pero no mencionaste el Tamaño de Muestra ni las Métricas de Éxito."*
+4. **Sugerencias Sustentadas (Auto-Completado Legal):** Para la sección de comunicación al cliente, la IA lee la intención del experimento y despliega un menú desplegable con 3 opciones de **frases legales y *disclaimers* preaprobados** por el equipo Legal del BCP. El PM solo da clic a la que mejor se ajuste.
+5. **Mecanismo de Bloqueo (Gating):** El botón de "Enviar a Aprobación" permanece **desactivado (gris)**. Solo se ilumina en verde cuando el 100% de los campos críticos (Muestra, Métricas, Data Personal, Copy) están validados por el sistema.
+6. **Output Estandarizado:** Riesgos y Legal dejan de recibir correos largos. Reciben en su bandeja un **Expediente de 1 Página (One-Pager)** estructurado, donde los campos normativos ya pasaron la pre-verificación algorítmica.
+
+## 3. SUSTENTO METODOLÓGICO Y SESGOS MITIGADOS
+Este MVP no solo es software; es **ingeniería del comportamiento** aplicada a Product Operations, manteniendo siempre al humano en control (*Human in the Loop*):
+
+*   **Mitiga la "Racionalidad Limitada" (Bounded Rationality):** Un PM no puede memorizar todos los manuales de Legal y Riesgos. El sistema le quita esa carga cognitiva, insertando el conocimiento normativo directamente en su flujo de trabajo.
+*   **Destruye el "Sesgo de Acción" (Action Bias):** Al bloquear el botón de envío si faltan las métricas de éxito, el sistema obliga al PM a detenerse y diseñar la medición matemática antes de lanzar, evitando el error de "definir métricas sobre la marcha".
+*   **Human in the Loop:** La IA pre-llena y sugiere, pero el PM debe leer, editar si es necesario, y dar el clic final de confirmación, asegurando la responsabilidad sobre el diseño.
+
+## 4. LAS 3 MÉTRICAS DE ÉXITO (North Star Metrics del MVP)
+Si lanzamos esto el lunes, mediremos el éxito a 30 días con los siguientes KPIs fundamentados en los datos actuales:
+
+1.  **Tasa de Calidad de Entrada (Reducción de Retrabajo):**
+    *   *Diagnóstico:* Actualmente el 61% de experimentos son observados.
+    *   *Meta del MVP:* **Reducir la tasa de rechazo a menos del 20%** en el primer mes, logrando "Cero adivinanzas" en el diseño.
+2.  **Tiempo de Ciclo de Aprobación (Lead Time):**
+    *   *Diagnóstico:* El proceso observado demora 20 días; el promedio es 15 días.
+    *   *Meta del MVP:* **Reducir el tiempo promedio de aprobación a 7 días hábiles** (alcanzando el objetivo interno no formalizado de las áreas de control), gracias al *One-Pager* estandarizado.
+3.  **Tasa de Auto-Aprobación Legal (Zero-Touch Legal Rate):**
+    *   *Definición:* El porcentaje de experimentos que utilizan cláusulas del *Catálogo Legal Preaprobado* sugerido por la IA, evitando por completo la revisión manual de la asesora Legal.
+    *   *Meta:* Lograr que el **40% de los experimentos** pasen por un "Fast-Track" legal automático.
+
+---
+
+## 5. FLUJO DE USUARIO Y PANTALLAS (Guía para el Prototipo UI/UX)
+
+Para el prototipo (en Figma, Typeform o interfaz web), concéntrate en estas **4 pantallas clave** usando la identidad visual del archivo `DESIGN.md` (Fondo Deep Navy, tarjetas Glassmorphism, etc.).
+
+### Pantalla 1: Dashboard de Product Ops (Inicio)
+*   **Visual:** Interfaz limpia con barra lateral. Tarjetas tipo "Bento Grid".
+*   **Funcionalidad:** Muestra el backlog del PM (Ej: "Mis Experimentos Activos", "Borradores").
+*   **Acción:** Un botón grande, brillante (Índigo CIX) que diga: `+ NUEVO EXPERIMENTO (AI ASSISTED)`.
+
+### Pantalla 2: El Intake Auditivo (La Magia)
+*   **Visual:** Diseño minimalista. Un micrófono central pulsante con ondas de voz reactivas.
+*   **Texto en pantalla:** *"¿Qué intentamos aprender hoy? Cuéntame tu hipótesis, el segmento y cómo lo mediremos."*
+*   **Funcionalidad:** Muestra la transcripción de la voz a texto en tiempo real. Un botón abajo que diga `Procesar con IA`.
+
+### Pantalla 3: El "Experiment Canvas" Interactivo (Pantalla Principal)
+*   **Visual:** Pantalla dividida (Split-screen).
+    *   **Lado Izquierdo (El Canvas):** El formulario de 1 página con campos como *Hipótesis*, *Muestra*, *Métricas*, *Privacidad*. Lo que la IA detectó del audio ya está lleno.
+    *   **Lado Derecho (El Asistente IA):** Un panel lateral de chat o "Checklist de Calidad".
+*   **Funcionalidades Clave a mostrar en el prototipo:**
+    *   *Alerta Roja:* El campo "Métricas de Éxito" está resaltado en rojo escarlata. El asistente de la derecha dice: *"⚠️ Faltan métricas. Según datos históricos, el 24% de los rechazos son por esto. ¿Cuál es nuestro KPI primario?"*
+    *   *Menú Legal:* En la sección "Comunicación", un *dropdown* brilla en verde esmeralda diciendo: *"3 textos preaprobados encontrados para este segmento. Selecciona uno para evitar revisión de Legal."*
+    *   *Botón Bloqueado:* El botón flotante inferior de `Enviar a Riesgos/Legal` está opaco (gris) y no se puede clickear. Tiene un candado.
+
+### Pantalla 4: El "Ready for Takeoff" y Output
+*   **Visual:** Todos los campos del Canvas están ahora llenos y validados.
+*   **Funcionalidad:** El botón inferior se desbloquea, se vuelve verde esmeralda vibrante y el candado se abre.
+*   **Output Modal:** Al hacer clic, sale una ventana de confirmación mostrando el resumen (El One-Pager perfecto) con un mensaje: *"Expediente estandarizado generado. Enviando a Riesgos en carril rápido (Fast-Track)."*
+```eof
+
+¡Ahí lo tienes bro! Con este documento matas dos pájaros de un tiro: tienes el **sustento estratégico** (por qué la IA, qué métricas mejora, cómo elude sesgos) para tu PPT, y tienes el **guion pantalla por pantalla** para armar el prototipo visual. 
+
+Te sugiero que en la presentación menciones explícitamente esto: *"No se trata de reemplazar al PM con IA, se trata de darle un copiloto que se sepa de memoria las reglas del banco para que él se dedique a pensar en el negocio, no en llenar Excel"*. ¡Es un *killer pitch*! ¿Pasamos a idear visualmente cómo hacer el prototipo o armamos otro punto de la expo?
