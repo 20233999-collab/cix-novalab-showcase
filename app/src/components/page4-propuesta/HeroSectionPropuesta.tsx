@@ -8,7 +8,12 @@ import {
   Clock, 
   ShieldCheck, 
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  ExternalLink,
+  FileSpreadsheet,
+  GitPullRequest,
+  Activity,
+  Database
 } from "lucide-react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -64,6 +69,131 @@ export const HeroSectionPropuesta: React.FC<{ onExploreCanvas?: () => void }> = 
           >
             De un taller artesanal en cascada (57 días de ciclo y 61% de retrabajo) a una <strong className="text-white">fábrica digital de experimentación a escala</strong>. Una solución modular con valor tangible desde el primer mes, sin requerir presupuesto de software nuevo.
           </motion.p>
+
+          {/* 4 BOTONES DE ACCESO DIRECTO A LOS PROTOTIPOS MVP (1-4) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
+            className="mt-10 w-full max-w-5xl"
+          >
+            <div className="text-[11px] font-mono uppercase tracking-widest text-[#FEA900] mb-3 text-center sm:text-left flex items-center justify-center sm:justify-start gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#FEA900] animate-pulse" />
+              <span>PROTOTIPOS INTERACTIVOS EN VIVO · SELECCIONA UN MVP:</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              
+              {/* MVP 01 Button */}
+              <a
+                href="/mvp/mvp01.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-4 rounded-2xl bg-gradient-to-b from-[#0F1738] to-[#0A0E24] border border-emerald-500/30 hover:border-emerald-400/80 transition-all shadow-lg hover:shadow-emerald-500/20 hover:-translate-y-0.5 text-left flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold">
+                    MVP 01
+                  </span>
+                  <FileSpreadsheet className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+                </div>
+                <div>
+                  <div className="font-bold text-sm text-white font-display group-hover:text-emerald-300 transition-colors">
+                    Smart Canvas
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-sans mt-0.5">
+                    Intake inteligente & MDE
+                  </div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-emerald-400">
+                  <span>Abrir Prototipo</span>
+                  <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </a>
+
+              {/* MVP 02 Button */}
+              <a
+                href="/mvp/mvp02.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-4 rounded-2xl bg-gradient-to-b from-[#0F1738] to-[#0A0E24] border border-amber-500/30 hover:border-amber-400/80 transition-all shadow-lg hover:shadow-amber-500/20 hover:-translate-y-0.5 text-left flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[10px] font-bold">
+                    MVP 02
+                  </span>
+                  <GitPullRequest className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" />
+                </div>
+                <div>
+                  <div className="font-bold text-sm text-white font-display group-hover:text-amber-300 transition-colors">
+                    Smart Routing
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-sans mt-0.5">
+                    Fast-Track & 3 Carriles
+                  </div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-amber-400">
+                  <span>Abrir Prototipo</span>
+                  <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </a>
+
+              {/* MVP 03 Button */}
+              <a
+                href="/mvp/mvp03.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-4 rounded-2xl bg-gradient-to-b from-[#0F1738] to-[#0A0E24] border border-indigo-500/30 hover:border-indigo-400/80 transition-all shadow-lg hover:shadow-indigo-500/20 hover:-translate-y-0.5 text-left flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono text-[10px] font-bold">
+                    MVP 03
+                  </span>
+                  <Activity className="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform" />
+                </div>
+                <div>
+                  <div className="font-bold text-sm text-white font-display group-hover:text-indigo-300 transition-colors">
+                    Telemetría & Safe
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-sans mt-0.5">
+                    Kill-Switch & Guardrails
+                  </div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-indigo-300">
+                  <span>Abrir Prototipo</span>
+                  <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </a>
+
+              {/* MVP 04 Button */}
+              <a
+                href="/mvp/mvp04.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative p-4 rounded-2xl bg-gradient-to-b from-[#0F1738] to-[#0A0E24] border border-[#FEA900]/40 hover:border-[#FEA900] transition-all shadow-lg hover:shadow-[#FEA900]/25 hover:-translate-y-0.5 text-left flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#FEA900]/20 text-amber-300 font-mono text-[10px] font-bold">
+                    MVP 04
+                  </span>
+                  <Database className="w-4 h-4 text-[#FEA900] group-hover:scale-110 transition-transform" />
+                </div>
+                <div>
+                  <div className="font-bold text-sm text-white font-display group-hover:text-amber-300 transition-colors">
+                    Knowledge AI
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-sans mt-0.5">
+                    RAG Brain & Gating
+                  </div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-amber-300">
+                  <span>Abrir Prototipo</span>
+                  <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </a>
+
+            </div>
+          </motion.div>
         </div>
 
         {/* Visual Showcase 3D + HUD de Metas Proyectadas */}
